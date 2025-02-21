@@ -1,0 +1,5162 @@
+{
+	"info": {
+		"_postman_id": "dac6bade-873d-4d07-a211-62b8d80bc62f",
+		"name": "GraphQL Storefront API Labs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5974844",
+		"_collection_link": "https://lunar-sunset-473461.postman.co/workspace/BigCommerce-Dev-EDU~4b3675d4-fdbc-4360-898f-17d425e15d10/collection/5974844-dac6bade-873d-4d07-a211-62b8d80bc62f?action=share&source=collection_link&creator=5974844"
+	},
+	"item": [
+		{
+			"name": "Setup",
+			"item": [
+				{
+					"name": "REST Create Storefront Token (with origin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(\"Response includes token\", () => {",
+									"    pm.expect(pm.response.json().data?.token).to.be.a('string');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"allowed_cors_origins\": [\n        \"https://bigcommerce.github.io\"\n    ],\n    \"channel_id\": {{storefront_channel_id}},\n    \"expires_at\": 2147483647\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/storefront/api-token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"storefront",
+								"api-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Storefront Token (server to server)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(\"Response includes token\", () => {",
+									"    pm.expect(pm.response.json().data?.token).to.be.a('string');",
+									"});",
+									"",
+									"const token = pm.response.json().data?.token;",
+									"if (token) {",
+									"    pm.environment.unset(\"storefront_token\");",
+									"    pm.environment.set(\"storefront_token\", token);",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"channel_id\": {{storefront_channel_id}},\n    \"expires_at\": 2147483647\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/storefront/api-token",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"storefront",
+								"api-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Storefront CIT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(\"Response includes token\", () => {",
+									"    pm.expect(pm.response.json().data?.token).to.be.a('string');",
+									"});",
+									"",
+									"const token = pm.response.json().data?.token;",
+									"if (token) {",
+									"    pm.environment.unset(\"storefront_impersonation_token\");",
+									"    pm.environment.set(\"storefront_impersonation_token\", token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"channel_id\": {{storefront_channel_id}},\n    \"expires_at\": 2147483647\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/storefront/api-token-customer-impersonation",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"storefront",
+								"api-token-customer-impersonation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "GQL Get Category Tree",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const topCategories = pm.response.json().data?.site?.categoryTree;",
+									"pm.test(\"Response includes top-level categories\", () => {",
+									"    pm.expect(topCategories).to.be.a('array');",
+									"    pm.expect(topCategories.length).to.be.above(0);",
+									"});",
+									"",
+									"const firstCategoryWithProducts = topCategories.find(category => {",
+									"    return category.productCount > 0;",
+									"});",
+									"pm.test(\"Response includes at least one top-level category with products\", () => {",
+									"    pm.expect(firstCategoryWithProducts).not.to.be.undefined;",
+									"    pm.expect(firstCategoryWithProducts.entityId).to.be.a(\"number\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\n    site {\n        categoryTree {\n            ...categoryFields\n            children {\n                ...categoryFields\n                children {\n                    ...categoryFields\n                }\n            }\n        }\n    }\n}\n\nfragment categoryFields on CategoryTreeItem {\n    entityId\n    name\n    path\n    description\n    productCount\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"pm.test(\"Response includes category\", () => {",
+									"    pm.expect(pm.response.json().data?.site?.category?.name).to.be.a(\"string\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCategory($categoryId: Int!) {\n    site {\n        category(\n            entityId: $categoryId\n        ) {\n            name\n            path\n            defaultImage {\n                url(width: 500)\n            }\n            description\n        }\n    }\n}\n",
+								"variables": "{\n    \"categoryId\": <Category ID>\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Paginated Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const products = pm.response.json().data?.site?.products?.edges ?? [];",
+									"pm.test(\"Response includes at least one product\", () => {",
+									"    pm.expect(products.length).to.be.above(0);",
+									"});",
+									"",
+									"const firstValidProduct = products.map(product => product.node)",
+									"    .find(product => {",
+									"        if (product.availabilityV2?.status !== \"Available\"",
+									"            || product.type !== \"Physical\"",
+									"            || product.inventory?.isInStock !== true) {",
+									"                return false;",
+									"            }",
+									"",
+									"        const variants = product.variants?.edges ?? [];",
+									"        const firstValidVariant = variants.map(variant => variant.node)",
+									"            .find(variant => {",
+									"                return variant.inventory?.isInStock;",
+									"            });",
+									"",
+									"        if (!firstValidVariant) {",
+									"            return false;",
+									"        }",
+									"",
+									"        return product;",
+									"    });",
+									"",
+									"pm.test(\"Found a saleable physical product with a variant\", () => {",
+									"    pm.expect(firstValidProduct?.entityId).to.be.a(\"number\");",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetProducts(\n    $lastProductCursor: String\n) {\n    site {\n        products(\n            after: $lastProductCursor,\n            first: 5\n        ) {\n            pageInfo {\n                hasNextPage\n                endCursor\n            }\n            collectionInfo {\n                totalItems\n            }\n            edges {\n                cursor\n                node {\n                    entityId\n                    sku\n                    name\n                    type\n                    availabilityV2 {\n                        status\n                    }\n                    inventory {\n                        isInStock\n                    }\n                    variants(isPurchasable: true) {\n                        edges {\n                            node {\n                                entityId\n                                inventory {\n                                    isInStock\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"lastProductCursor\": \"<cursor>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(\"Response includes a product\", () => {",
+									"    pm.expect(pm.response.json().data?.site?.product?.sku).to.be.a(\"string\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetProduct(\n    $productId: Int\n) {\n    site {\n        product(\n            entityId: $productId\n        ) {\n            sku\n            name\n            description\n            prices {\n                price {\n                    currencyCode\n                    value\n                }\n            }\n            defaultImage {\n                url(width: 500)\n            }\n            productOptions {\n                edges {\n                    node {\n                        entityId\n                        displayName\n                        __typename\n                        isRequired\n                        isVariantOption\n                        ... on CheckboxOption {\n                            label\n                        }\n                        ... on MultipleChoiceOption {\n                            displayStyle\n                            values {\n                                edges {\n                                    node {\n                                        entityId\n                                        label\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"productId\": <Product ID>\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog (Automated)",
+			"item": [
+				{
+					"name": "GQL Get Category Tree",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const topCategories = pm.response.json().data?.site?.categoryTree;",
+									"pm.test(\"Response includes top-level categories\", () => {",
+									"    pm.expect(topCategories).to.be.a('array');",
+									"    pm.expect(topCategories.length).to.be.above(0);",
+									"});",
+									"",
+									"const firstCategoryWithProducts = topCategories.find(category => {",
+									"    return category.productCount > 0;",
+									"});",
+									"pm.test(\"Response includes at least one top-level category with products\", () => {",
+									"    pm.expect(firstCategoryWithProducts).not.to.be.undefined;",
+									"    pm.expect(firstCategoryWithProducts.entityId).to.be.a(\"number\");",
+									"});",
+									"",
+									"// Store ID of top-level category with products",
+									"pm.collectionVariables.unset(\"category_id\");",
+									"if (firstCategoryWithProducts) {",
+									"    pm.collectionVariables.set(\"category_id\", firstCategoryWithProducts.entityId);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\n    site {\n        categoryTree {\n            ...categoryFields\n            children {\n                ...categoryFields\n                children {\n                    ...categoryFields\n                }\n            }\n        }\n    }\n}\n\nfragment categoryFields on CategoryTreeItem {\n    entityId\n    name\n    path\n    description\n    productCount\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"pm.test(\"Response includes category\", () => {",
+									"    pm.expect(pm.response.json().data?.site?.category?.name).to.be.a(\"string\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCategory($categoryId: Int!) {\n    site {\n        category(\n            entityId: $categoryId\n        ) {\n            name\n            path\n            defaultImage {\n                url(width: 500)\n            }\n            description\n        }\n    }\n}\n",
+								"variables": "{\n    \"categoryId\": {{category_id}}\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Paginated Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const products = pm.response.json().data?.site?.products?.edges ?? [];",
+									"pm.test(\"Response includes at least one product\", () => {",
+									"    pm.expect(products.length).to.be.above(0);",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"variant_id\");",
+									"",
+									"const firstValidProduct = products.map(product => product.node)",
+									"    .find(product => {",
+									"        if (product.availabilityV2?.status !== \"Available\"",
+									"            || product.type !== \"Physical\"",
+									"            || product.inventory?.isInStock !== true) {",
+									"                return false;",
+									"            }",
+									"",
+									"        const variants = product.variants?.edges ?? [];",
+									"        const firstValidVariant = variants.map(variant => variant.node)",
+									"            .find(variant => {",
+									"                return variant.inventory?.isInStock;",
+									"            });",
+									"",
+									"        if (!firstValidVariant) {",
+									"            return false;",
+									"        }",
+									"",
+									"        pm.collectionVariables.set(\"variant_id\", firstValidVariant.entityId);",
+									"",
+									"        return product;",
+									"    });",
+									"",
+									"pm.test(\"Found a saleable physical product with a variant\", () => {",
+									"    pm.expect(firstValidProduct?.entityId).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"product_id\");",
+									"pm.collectionVariables.set(\"product_id\", firstValidProduct?.entityId);",
+									"",
+									"if (pm.response.json().data?.site?.products?.pageInfo?.hasNextPage === true) {",
+									"    pm.collectionVariables.set(",
+									"        \"last_product_cursor\", ",
+									"        pm.response.json().data?.site?.products?.pageInfo?.endCursor",
+									"    );",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetProducts(\n    $lastProductCursor: String\n) {\n    site {\n        products(\n            after: $lastProductCursor,\n            first: 5\n        ) {\n            pageInfo {\n                hasNextPage\n                endCursor\n            }\n            collectionInfo {\n                totalItems\n            }\n            edges {\n                cursor\n                node {\n                    entityId\n                    sku\n                    name\n                    type\n                    availabilityV2 {\n                        status\n                    }\n                    inventory {\n                        isInStock\n                    }\n                    variants(isPurchasable: true) {\n                        edges {\n                            node {\n                                entityId\n                                inventory {\n                                    isInStock\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"lastProductCursor\": \"{{last_product_cursor}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(\"Response includes a product\", () => {",
+									"    pm.expect(pm.response.json().data?.site?.product?.sku).to.be.a(\"string\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetProduct(\n    $productId: Int\n) {\n    site {\n        product(\n            entityId: $productId\n        ) {\n            sku\n            name\n            description\n            prices {\n                price {\n                    currencyCode\n                    value\n                }\n            }\n            defaultImage {\n                url(width: 500)\n            }\n            productOptions {\n                edges {\n                    node {\n                        entityId\n                        displayName\n                        __typename\n                        isRequired\n                        isVariantOption\n                        ... on CheckboxOption {\n                            label\n                        }\n                        ... on MultipleChoiceOption {\n                            displayStyle\n                            values {\n                                edges {\n                                    node {\n                                        entityId\n                                        label\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"productId\": {{product_id}}\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search/Filter",
+			"item": [
+				{
+					"name": "REST Create Example Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const categories = pm.response.json().data;",
+									"pm.test(\"Response includes 4 categories\", () => {",
+									"    pm.expect(categories.length).to.equal(4);",
+									"});",
+									"",
+									"const categoriesWithIds = categories.filter(category => {",
+									"    return !!category.category_id;",
+									"});",
+									"pm.test(\"All categories have IDs\", () => {",
+									"    pm.expect(categoriesWithIds.length).to.equal(4);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n\t   \"name\": \"Fitness\",\n\t   \"sort_order\": 10,\n\t   \"is_visible\": true,\n\t   \"default_product_sort\": \"use_store_settings\",\n\t   \"parent_id\": 0,\n\t   \"tree_id\": 1\n    },\n    {\n\t   \"name\": \"Casual Wear\",\n\t   \"sort_order\": 20,\n\t   \"is_visible\": true,\n\t   \"default_product_sort\": \"use_store_settings\",\n\t   \"parent_id\": 0,\n\t   \"tree_id\": 1\n    },\n    {\n\t   \"name\": \"Professional Wear\",\n\t   \"sort_order\": 30,\n\t   \"is_visible\": true,\n\t   \"default_product_sort\": \"use_store_settings\",\n\t   \"parent_id\": 0,\n\t   \"tree_id\": 1\n    },\n    {\n\t   \"name\": \"On Sale\",\n\t   \"sort_order\": 40,\n\t   \"is_visible\": true,\n\t   \"default_product_sort\": \"use_store_settings\",\n\t   \"parent_id\": 0,\n\t   \"tree_id\": 1\n    }\n]\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/trees/categories",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"trees",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Example Product 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const product = pm.response.json().data;",
+									"",
+									"pm.test(\"Product has ID\", () => {",
+									"    pm.expect(product.id).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Product has 3 variants\", () => {",
+									"    pm.expect(product.variants?.length).to.equal(3);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Athletic T-Shirt\",\n    \"sku\": \"SRT-ATH\",\n    \"type\": \"physical\",\n    \"price\": 80,\n    \"weight\": 1,\n    \"variants\": [\n        {\n            \"sku\": \"SRT-ATH-BK\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Black\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-ATH-GR\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Grey\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-ATH-RD\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Red\"\n                }\n            ]\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/products",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Example Product 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const product = pm.response.json().data;",
+									"",
+									"pm.test(\"Product has ID\", () => {",
+									"    pm.expect(product.id).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Product has 2 variants\", () => {",
+									"    pm.expect(product.variants?.length).to.equal(2);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Casual T-Shirt\",\n    \"sku\": \"SRT-CAS\",\n    \"type\": \"physical\",\n    \"price\": 50,\n    \"sale_price\": 45,\n    \"weight\": 1,\n    \"variants\": [\n        {\n            \"sku\": \"SRT-CAS-WH\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"White\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-CAS-RD\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Red\"\n                }\n            ]\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/products",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Example Product 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const product = pm.response.json().data;",
+									"",
+									"pm.test(\"Product has ID\", () => {",
+									"    pm.expect(product.id).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Product has 3 variants\", () => {",
+									"    pm.expect(product.variants?.length).to.equal(3);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Professional T-Shirt\",\n    \"sku\": \"SRT-PRO\",\n    \"type\": \"physical\",\n    \"price\": 85,\n    \"weight\": 1,\n    \"variants\": [\n        {\n            \"sku\": \"SRT-PRO-BK\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Black\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-PRO-WH\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"White\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-PRO-BL\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Blue\"\n                }\n            ]\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/products",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Example Product 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const product = pm.response.json().data;",
+									"",
+									"pm.test(\"Product has ID\", () => {",
+									"    pm.expect(product.id).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Product has 3 variants\", () => {",
+									"    pm.expect(product.variants?.length).to.equal(3);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Striped T-Shirt\",\n    \"sku\": \"SRT-STRP\",\n    \"type\": \"physical\",\n    \"price\": 70,\n    \"sale_price\": 60,\n    \"weight\": 1,\n    \"variants\": [\n        {\n            \"sku\": \"SRT-STRP-GR\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Grey\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-STRP-BL\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Blue\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-STRP-BK\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Black\"\n                }\n            ]\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/products",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Product Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const products = pm.response.json().data?.site?.search?.searchProducts?.products?.edges ",
+									"    ?? [];",
+									"pm.test(\"Response includes at least one product\", () => {",
+									"    pm.expect(products.length).to.be.above(0);",
+									"});",
+									"",
+									"const filterValueIndex = 0;",
+									"",
+									"const availableFilters = pm.response.json().data?.site?.search?.searchProducts?.filters?.edges",
+									"    ?? [];",
+									"const availableCatFilter = availableFilters.find(filter => {",
+									"    return filter.node?.__typename === \"CategorySearchFilter\";",
+									"});",
+									"pm.test(\"Response includes available category filters\", () => {",
+									"    pm.expect(availableCatFilter?.node?.categories?.edges?.length)",
+									"        .to.be.above(filterValueIndex);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Search(\n    $searchTerm: String\n) {\n    site {\n        search {\n            searchProducts(\n                filters: {\n                    searchTerm: $searchTerm\n                }\n            ) {\n                filters {\n                    edges {\n                        node {\n                            name\n                            __typename\n                            ... on ProductAttributeSearchFilter {\n                                filterName\n                                attributes {\n                                    edges {\n                                        node {\n                                            value\n                                            isSelected\n                                        }\n                                    }\n                                }\n                            }\n                            ... on CategorySearchFilter {\n                                categories {\n                                    edges {\n                                        node {\n                                            entityId\n                                            name\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n                products {\n                    collectionInfo {\n                        totalItems\n                    }\n                    edges {\n                        node {\n                            sku\n                            name\n                            categories {\n                                edges {\n                                    node {\n                                        entityId\n                                        name\n                                    }\n                                }\n                            }\n                            productOptions {\n                                edges {\n                                    node {\n                                        displayName\n                                        ... on MultipleChoiceOption {\n                                            values {\n                                                edges {\n                                                    node {\n                                                        entityId\n                                                        label\n                                                    }\n                                                }\n                                            }\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"searchTerm\": \"<Search Term>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Product Search - Cat",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const products = pm.response.json().data?.site?.search?.searchProducts?.products?.edges ",
+									"    ?? [];",
+									"pm.test(\"Response includes at least one product\", () => {",
+									"    pm.expect(products.length).to.be.above(0);",
+									"});",
+									"",
+									"const filterValueIndex = 0;",
+									"const variantFilterName = \"Color\";",
+									"",
+									"const availableFilters = pm.response.json().data?.site?.search?.searchProducts?.filters?.edges",
+									"    ?? [];",
+									"const availableVariantFilter = availableFilters.find(filter => {",
+									"    return filter.node.name === variantFilterName;",
+									"});",
+									"pm.test(\"Response includes available variant filters\", () => {",
+									"    pm.expect(availableVariantFilter?.node?.attributes?.edges?.length)",
+									"        .to.be.above(filterValueIndex);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Search(\n    $searchTerm: String,\n    $categoryId: Int!\n) {\n    site {\n        search {\n            searchProducts(\n                filters: {\n                    searchTerm: $searchTerm,\n                    categoryEntityId: $categoryId\n                }\n            ) {\n                filters {\n                    edges {\n                        node {\n                            name\n                            __typename\n                            ... on ProductAttributeSearchFilter {\n                                filterName\n                                attributes {\n                                    edges {\n                                        node {\n                                            value\n                                            isSelected\n                                        }\n                                    }\n                                }\n                            }\n                            ... on CategorySearchFilter {\n                                categories {\n                                    edges {\n                                        node {\n                                            entityId\n                                            name\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n                products {\n                    collectionInfo {\n                        totalItems\n                    }\n                    edges {\n                        node {\n                            sku\n                            name\n                            categories {\n                                edges {\n                                    node {\n                                        entityId\n                                        name\n                                    }\n                                }\n                            }\n                            productOptions {\n                                edges {\n                                    node {\n                                        displayName\n                                        ... on MultipleChoiceOption {\n                                            values {\n                                                edges {\n                                                    node {\n                                                        entityId\n                                                        label\n                                                    }\n                                                }\n                                            }\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"searchTerm\": \"<Search Term>\",\n    \"categoryId\": <Category ID>\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Product Search - Cat, Variant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const products = pm.response.json().data?.site?.search?.searchProducts?.products?.edges ",
+									"    ?? [];",
+									"pm.test(\"Response includes at least one product\", () => {",
+									"    pm.expect(products.length).to.be.above(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Search(\n    $searchTerm: String,\n    $categoryId: Int!,\n    $variantAttrName: String!,\n    $variantAttrVal: String!\n) {\n    site {\n        search {\n            searchProducts(\n                filters: {\n                    searchTerm: $searchTerm,\n                    categoryEntityId: $categoryId,\n                    productAttributes: [\n                        {\n                            attribute: $variantAttrName,\n                            values: [$variantAttrVal]\n                        }\n                    ]\n                }\n            ) {\n                filters {\n                    edges {\n                        node {\n                            name\n                            __typename\n                            ... on ProductAttributeSearchFilter {\n                                filterName\n                                attributes {\n                                    edges {\n                                        node {\n                                            value\n                                            isSelected\n                                        }\n                                    }\n                                }\n                            }\n                            ... on CategorySearchFilter {\n                                categories {\n                                    edges {\n                                        node {\n                                            entityId\n                                            name\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n                products {\n                    collectionInfo {\n                        totalItems\n                    }\n                    edges {\n                        node {\n                            sku\n                            name\n                            categories {\n                                edges {\n                                    node {\n                                        entityId\n                                        name\n                                    }\n                                }\n                            }\n                            productOptions {\n                                edges {\n                                    node {\n                                        displayName\n                                        ... on MultipleChoiceOption {\n                                            values {\n                                                edges {\n                                                    node {\n                                                        entityId\n                                                        label\n                                                    }\n                                                }\n                                            }\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"searchTerm\": \"<Search Term>\",\n    \"categoryId\": <Category ID>,\n    \"variantAttrName\": \"<Attribute Name>\",\n    \"variantAttrVal\": \"<Valuel Name>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search/Filter (Automated)",
+			"item": [
+				{
+					"name": "REST Create Example Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const categories = pm.response.json().data;",
+									"pm.test(\"Response includes 4 categories\", () => {",
+									"    pm.expect(categories.length).to.equal(4);",
+									"});",
+									"",
+									"const categoriesWithIds = categories.filter(category => {",
+									"    return !!category.category_id;",
+									"});",
+									"pm.test(\"All categories have IDs\", () => {",
+									"    pm.expect(categoriesWithIds.length).to.equal(4);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n\t   \"name\": \"Fitness\",\n\t   \"sort_order\": 10,\n\t   \"is_visible\": true,\n\t   \"default_product_sort\": \"use_store_settings\",\n\t   \"parent_id\": 0,\n\t   \"tree_id\": 1\n    },\n    {\n\t   \"name\": \"Casual Wear\",\n\t   \"sort_order\": 20,\n\t   \"is_visible\": true,\n\t   \"default_product_sort\": \"use_store_settings\",\n\t   \"parent_id\": 0,\n\t   \"tree_id\": 1\n    },\n    {\n\t   \"name\": \"Professional Wear\",\n\t   \"sort_order\": 30,\n\t   \"is_visible\": true,\n\t   \"default_product_sort\": \"use_store_settings\",\n\t   \"parent_id\": 0,\n\t   \"tree_id\": 1\n    },\n    {\n\t   \"name\": \"On Sale\",\n\t   \"sort_order\": 40,\n\t   \"is_visible\": true,\n\t   \"default_product_sort\": \"use_store_settings\",\n\t   \"parent_id\": 0,\n\t   \"tree_id\": 1\n    }\n]\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/trees/categories",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"trees",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Example Product 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const product = pm.response.json().data;",
+									"",
+									"pm.test(\"Product has ID\", () => {",
+									"    pm.expect(product.id).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Product has 3 variants\", () => {",
+									"    pm.expect(product.variants?.length).to.equal(3);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Athletic T-Shirt\",\n    \"sku\": \"SRT-ATH\",\n    \"type\": \"physical\",\n    \"price\": 80,\n    \"weight\": 1,\n    \"variants\": [\n        {\n            \"sku\": \"SRT-ATH-BK\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Black\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-ATH-GR\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Grey\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-ATH-RD\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Red\"\n                }\n            ]\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/products",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Example Product 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const product = pm.response.json().data;",
+									"",
+									"pm.test(\"Product has ID\", () => {",
+									"    pm.expect(product.id).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Product has 2 variants\", () => {",
+									"    pm.expect(product.variants?.length).to.equal(2);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Casual T-Shirt\",\n    \"sku\": \"SRT-CAS\",\n    \"type\": \"physical\",\n    \"price\": 50,\n    \"sale_price\": 45,\n    \"weight\": 1,\n    \"variants\": [\n        {\n            \"sku\": \"SRT-CAS-WH\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"White\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-CAS-RD\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Red\"\n                }\n            ]\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/products",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Example Product 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const product = pm.response.json().data;",
+									"",
+									"pm.test(\"Product has ID\", () => {",
+									"    pm.expect(product.id).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Product has 3 variants\", () => {",
+									"    pm.expect(product.variants?.length).to.equal(3);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Professional T-Shirt\",\n    \"sku\": \"SRT-PRO\",\n    \"type\": \"physical\",\n    \"price\": 85,\n    \"weight\": 1,\n    \"variants\": [\n        {\n            \"sku\": \"SRT-PRO-BK\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Black\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-PRO-WH\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"White\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-PRO-BL\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Blue\"\n                }\n            ]\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/products",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Example Product 4",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const product = pm.response.json().data;",
+									"",
+									"pm.test(\"Product has ID\", () => {",
+									"    pm.expect(product.id).to.be.a(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Product has 3 variants\", () => {",
+									"    pm.expect(product.variants?.length).to.equal(3);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Striped T-Shirt\",\n    \"sku\": \"SRT-STRP\",\n    \"type\": \"physical\",\n    \"price\": 70,\n    \"sale_price\": 60,\n    \"weight\": 1,\n    \"variants\": [\n        {\n            \"sku\": \"SRT-STRP-GR\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Grey\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-STRP-BL\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Blue\"\n                }\n            ]\n        },\n        {\n            \"sku\": \"SRT-STRP-BK\",\n            \"option_values\": [\n                {\n                    \"option_display_name\": \"Color\",\n                    \"label\": \"Black\"\n                }\n            ]\n        }\n    ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/catalog/products",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"catalog",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Product Search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const products = pm.response.json().data?.site?.search?.searchProducts?.products?.edges ",
+									"    ?? [];",
+									"pm.test(\"Response includes at least one product\", () => {",
+									"    pm.expect(products.length).to.be.above(0);",
+									"});",
+									"",
+									"const filterValueIndex = 0;",
+									"",
+									"const availableFilters = pm.response.json().data?.site?.search?.searchProducts?.filters?.edges",
+									"    ?? [];",
+									"const availableCatFilter = availableFilters.find(filter => {",
+									"    return filter.node?.__typename === \"CategorySearchFilter\";",
+									"});",
+									"pm.test(\"Response includes available category filters\", () => {",
+									"    pm.expect(availableCatFilter?.node?.categories?.edges?.length)",
+									"        .to.be.above(filterValueIndex);",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"filter_category\");",
+									"const newCatFilter = availableCatFilter?.node?.categories?.edges[filterValueIndex]?.node;",
+									"pm.collectionVariables.set(\"filter_category\", newCatFilter?.entityId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Search(\n    $searchTerm: String\n) {\n    site {\n        search {\n            searchProducts(\n                filters: {\n                    searchTerm: $searchTerm\n                }\n            ) {\n                filters {\n                    edges {\n                        node {\n                            name\n                            __typename\n                            ... on ProductAttributeSearchFilter {\n                                filterName\n                                attributes {\n                                    edges {\n                                        node {\n                                            value\n                                            isSelected\n                                        }\n                                    }\n                                }\n                            }\n                            ... on CategorySearchFilter {\n                                categories {\n                                    edges {\n                                        node {\n                                            entityId\n                                            name\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n                products {\n                    collectionInfo {\n                        totalItems\n                    }\n                    edges {\n                        node {\n                            sku\n                            name\n                            categories {\n                                edges {\n                                    node {\n                                        entityId\n                                        name\n                                    }\n                                }\n                            }\n                            productOptions {\n                                edges {\n                                    node {\n                                        displayName\n                                        ... on MultipleChoiceOption {\n                                            values {\n                                                edges {\n                                                    node {\n                                                        entityId\n                                                        label\n                                                    }\n                                                }\n                                            }\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"searchTerm\": \"{{filter_search_term}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Product Search - Cat",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const products = pm.response.json().data?.site?.search?.searchProducts?.products?.edges ",
+									"    ?? [];",
+									"pm.test(\"Response includes at least one product\", () => {",
+									"    pm.expect(products.length).to.be.above(0);",
+									"});",
+									"",
+									"const filterValueIndex = 0;",
+									"const variantFilterName = \"Color\";",
+									"",
+									"const availableFilters = pm.response.json().data?.site?.search?.searchProducts?.filters?.edges",
+									"    ?? [];",
+									"const availableVariantFilter = availableFilters.find(filter => {",
+									"    return filter.node.name === variantFilterName;",
+									"});",
+									"pm.test(\"Response includes available variant filters\", () => {",
+									"    pm.expect(availableVariantFilter?.node?.attributes?.edges?.length)",
+									"        .to.be.above(filterValueIndex);",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"filter_variant_attr_name\");",
+									"pm.collectionVariables.unset(\"filter_variant_attr_val\");",
+									"const newVariantFilter = availableVariantFilter?.node?.attributes?.edges[0]?.node;",
+									"pm.collectionVariables.set(\"filter_variant_attr_name\", variantFilterName);",
+									"pm.collectionVariables.set(\"filter_variant_attr_val\", newVariantFilter?.value);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Search(\n    $searchTerm: String,\n    $categoryId: Int!\n) {\n    site {\n        search {\n            searchProducts(\n                filters: {\n                    searchTerm: $searchTerm,\n                    categoryEntityId: $categoryId\n                }\n            ) {\n                filters {\n                    edges {\n                        node {\n                            name\n                            __typename\n                            ... on ProductAttributeSearchFilter {\n                                filterName\n                                attributes {\n                                    edges {\n                                        node {\n                                            value\n                                            isSelected\n                                        }\n                                    }\n                                }\n                            }\n                            ... on CategorySearchFilter {\n                                categories {\n                                    edges {\n                                        node {\n                                            entityId\n                                            name\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n                products {\n                    collectionInfo {\n                        totalItems\n                    }\n                    edges {\n                        node {\n                            sku\n                            name\n                            categories {\n                                edges {\n                                    node {\n                                        entityId\n                                        name\n                                    }\n                                }\n                            }\n                            productOptions {\n                                edges {\n                                    node {\n                                        displayName\n                                        ... on MultipleChoiceOption {\n                                            values {\n                                                edges {\n                                                    node {\n                                                        entityId\n                                                        label\n                                                    }\n                                                }\n                                            }\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"searchTerm\": \"{{filter_search_term}}\",\n    \"categoryId\": {{filter_category}}\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Product Search - Cat, Variant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test(\"Response is JSON with data\", () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const products = pm.response.json().data?.site?.search?.searchProducts?.products?.edges ",
+									"    ?? [];",
+									"pm.test(\"Response includes at least one product\", () => {",
+									"    pm.expect(products.length).to.be.above(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Search(\n    $searchTerm: String,\n    $categoryId: Int!,\n    $variantAttrName: String!,\n    $variantAttrVal: String!\n) {\n    site {\n        search {\n            searchProducts(\n                filters: {\n                    searchTerm: $searchTerm,\n                    categoryEntityId: $categoryId,\n                    productAttributes: [\n                        {\n                            attribute: $variantAttrName,\n                            values: [$variantAttrVal]\n                        }\n                    ]\n                }\n            ) {\n                filters {\n                    edges {\n                        node {\n                            name\n                            __typename\n                            ... on ProductAttributeSearchFilter {\n                                filterName\n                                attributes {\n                                    edges {\n                                        node {\n                                            value\n                                            isSelected\n                                        }\n                                    }\n                                }\n                            }\n                            ... on CategorySearchFilter {\n                                categories {\n                                    edges {\n                                        node {\n                                            entityId\n                                            name\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n                products {\n                    collectionInfo {\n                        totalItems\n                    }\n                    edges {\n                        node {\n                            sku\n                            name\n                            categories {\n                                edges {\n                                    node {\n                                        entityId\n                                        name\n                                    }\n                                }\n                            }\n                            productOptions {\n                                edges {\n                                    node {\n                                        displayName\n                                        ... on MultipleChoiceOption {\n                                            values {\n                                                edges {\n                                                    node {\n                                                        entityId\n                                                        label\n                                                    }\n                                                }\n                                            }\n                                        }\n                                    }\n                                }\n                            }\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"searchTerm\": \"{{filter_search_term}}\",\n    \"categoryId\": {{filter_category}},\n    \"variantAttrName\": \"{{filter_variant_attr_name}}\",\n    \"variantAttrVal\": \"{{filter_variant_attr_val}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart/Checkout",
+			"item": [
+				{
+					"name": "GQL Create Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"",
+									"const cart = pm.response.json().data?.cart?.createCart?.cart;",
+									"pm.test('Response includes a cart ID', () => {",
+									"    pm.expect(",
+									"        cart?.entityId",
+									"    ).to.be.a('string')",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateCart(\n    $itemQty: Int = 1, \n    $productId: Int!, \n    $variantId: Int\n) {\n    cart {\n        createCart(\n            input: {\n                lineItems: [\n                    {\n                        quantity: $itemQty, \n                        productEntityId: $productId, \n                        variantEntityId: $variantId\n                    }\n                ]\n            }\n        ) {\n            cart {\n                id\n                entityId\n                lineItems {\n                    physicalItems {\n                        entityId\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"itemQty\": 1,\n    \"productId\": <Product ID>,\n    \"variantId\": <Variant ID>\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCart(\n  $cartId: String!\n) {\n    site {\n        cart(entityId: $cartId) {\n            id\n            entityId\n            currencyCode\n            baseAmount {\n                value\n            }\n            amount {\n                value\n            }\n            lineItems {\n                physicalItems {\n                    entityId\n                    productEntityId\n                    variantEntityId\n                    sku\n                    name\n                    imageUrl\n                    quantity\n                    listPrice {\n                        value\n                    }\n                    originalPrice {\n                        value\n                    }\n                    salePrice {\n                        value\n                    }\n                }\n                digitalItems {\n                    entityId\n                    productEntityId\n                    variantEntityId\n                    sku\n                    name\n                    imageUrl\n                    quantity\n                    listPrice {\n                        value\n                    }\n                    originalPrice {\n                        value\n                    }\n                    salePrice {\n                        value\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"<Cart ID>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Cart Redirect URLs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"",
+									"const urls = pm.response.json().data?.cart?.createCartRedirectUrls?.redirectUrls;",
+									"pm.test('Response includes redirect URLs', () => {",
+									"    pm.expect(",
+									"        urls?.redirectedCheckoutUrl",
+									"    ).to.not.be.empty;",
+									"    pm.expect(",
+									"        urls?.embeddedCheckoutUrl",
+									"    ).to.not.be.empty;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation GetCartRedirectUrls(\n    $cartId: String!\n) {\n    cart {\n        createCartRedirectUrls(\n            input: {\n                cartEntityId: $cartId\n            }\n        ) {\n            redirectUrls {\n                redirectedCheckoutUrl\n                embeddedCheckoutUrl\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"<Cart ID>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCart(\n  $cartId: String!\n) {\n    site {\n        checkout(entityId: $cartId) {\n            cart {\n                id\n                entityId\n                currencyCode\n                baseAmount {\n                    value\n                }\n                amount {\n                    value\n                }\n            }\n            shippingCostTotal {\n                value\n            }\n            handlingCostTotal {\n                value\n            }\n            taxTotal {\n                value\n            }\n            subtotal {\n                value\n            }\n            grandTotal {\n                value\n            }\n            billingAddress {\n                firstName\n                lastName\n                email\n                address1\n                city\n                stateOrProvince\n                countryCode\n                postalCode\n                phone\n            }\n            shippingConsignments {\n                address {\n                    firstName\n                    lastName\n                    email\n                    address1\n                    city\n                    stateOrProvince\n                    countryCode\n                    postalCode\n                    phone\n                }\n                availableShippingOptions {\n                    description\n                    type\n                }\n                selectedShippingOption {\n                    description\n                    type\n                }\n                shippingCost {\n                    value\n                }\n                handlingCost {\n                    value\n                }\n                lineItemIds\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"<Cart ID>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Create Consignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const consignments = pm.response.json()",
+									"    .data?.checkout?.addCheckoutShippingConsignments",
+									"    ?.checkout?.shippingConsignments;",
+									"",
+									"pm.test('Response includes exactly one consignment', () => {",
+									"    pm.expect(consignments?.length).to.equal(1);",
+									"});",
+									"pm.test('Consignment includes at least one available shipping option', () => {",
+									"    pm.expect(consignments[0].availableShippingOptions?.length).to.be.above(0);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation AddConsignments(\n    $cartId: String!, \n    $lineItemId: String!, \n    $lineItemQty: Int = 1\n) {\n    checkout {\n        addCheckoutShippingConsignments(\n            input: {\n                checkoutEntityId: $cartId, \n                data: {\n                    consignments: [{\n                        address: {\n                            firstName: \"John\", \n                            lastName: \"Doe\", \n                            email: \"john.doe@example.org\", \n                            address1: \"11305 Four Points Dr\", \n                            city: \"Austin\", \n                            stateOrProvince: \"Texas\", \n                            stateOrProvinceCode: \"TX\", \n                            countryCode: \"US\", \n                            postalCode: \"78726\", \n                            phone: \"5128654500\", \n                            shouldSaveAddress: false\n                        }, \n                        lineItems: [{\n                            lineItemEntityId: $lineItemId,\n                            quantity: $lineItemQty\n                        }]\n                    }]\n                }\n            }\n        ) {\n            checkout {\n                shippingConsignments {\n                    entityId\n                    availableShippingOptions {\n                        entityId\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"<Cart ID>\",\n    \"lineItemId\": \"<Line Item ID>\",\n    \"lineItemQty\": 1\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Select Shipping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"})",
+									"",
+									"const consignments = pm.response.json()",
+									"    .data?.checkout?.selectCheckoutShippingOption",
+									"    ?.checkout?.shippingConsignments;",
+									"",
+									"pm.test('Response includes exactly one consignment', () => {",
+									"    pm.expect(consignments?.length).to.equal(1);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation SelectShipping(\n    $cartId: String!, \n    $consignmentId: String!, \n    $shippingOptionId: String!\n) {\n    checkout {\n        selectCheckoutShippingOption(\n            input: {\n                checkoutEntityId: $cartId, \n                consignmentEntityId: $consignmentId, \n                data: {\n                    shippingOptionEntityId: $shippingOptionId\n                }\n            }\n        ) {\n            checkout {\n                shippingConsignments {\n                    selectedShippingOption {\n                        entityId\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"<Cart ID>\",\n    \"consignmentId\": \"<Consignment ID>\",\n    \"shippingOptionId\": \"<Shipping Option ID>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Create Billing Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const billingAddress = pm.response.json()",
+									"    .data?.checkout?.addCheckoutBillingAddress",
+									"    ?.checkout?.billingAddress;",
+									"",
+									"pm.test(",
+									"    'Billing address includes an id that is a string', ",
+									"    () => {",
+									"        pm.expect(billingAddress?.entityId).to.be.a('string');",
+									"    }",
+									");",
+									"pm.test(",
+									"    'Billing address includes an email that is a non-empty string', ",
+									"    () => {",
+									"        pm.expect(",
+									"            billingAddress?.email",
+									"        ).to.be.a('string').that.is.not.empty;",
+									"    }",
+									");",
+									"pm.test(",
+									"    'Billing address includes a country_code that is 2 characters', ",
+									"    () => {",
+									"        pm.expect(",
+									"            billingAddress?.countryCode",
+									"        ).to.be.a('string').that.has.lengthOf(2);",
+									"    }",
+									");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation AddBillingAddress(\n    $cartId: String!\n) {\n    checkout {\n        addCheckoutBillingAddress(\n            input: {\n                checkoutEntityId: $cartId, \n                data: {\n                    address: {\n                        firstName: \"John\", \n                        lastName: \"Doe\", \n                        email: \"john.doe@example.org\", \n                        address1: \"11307 Six Points Dr\", \n                        city: \"Austin\", \n                        stateOrProvince: \"Texas\", \n                        stateOrProvinceCode: \"TX\", \n                        countryCode: \"US\", \n                        postalCode: \"78726\", \n                        phone: \"5128654500\", \n                        shouldSaveAddress: false\n                    }\n                }\n            }\n        ) {\n            checkout {\n                billingAddress {\n                    entityId\n                    email\n                    countryCode\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"<Cart ID>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Complete Checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test('Response includes a numeric order ID', () => {",
+									"    pm.expect(",
+									"        pm.response.json()",
+									"        .data?.checkout?.completeCheckout?.orderEntityId",
+									"    ).to.be.a('number');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CompleteCheckout(\n    $cartId: String!\n) {\n    checkout {\n        completeCheckout(\n            input: {\n                checkoutEntityId: $cartId\n            }\n        ) {\n            orderEntityId\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"<Cart ID>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Get Payment Methods",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test('At least one payment method is available', () => {",
+									"    pm.expect(pm.response.json().data?.length).to.be.above(0);",
+									"});",
+									"",
+									"const methodInTestMode = pm.response.json()",
+									"    .data?.find(method => method.test_mode);",
+									"pm.test('At least one payment method is in test mode', () => {",
+									"    pm.expect(methodInTestMode).not.to.be.an('undefined');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/payments/methods?order_id=",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"payments",
+								"methods"
+							],
+							"query": [
+								{
+									"key": "order_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Pay Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(",
+									"    'Response includes a PAT that is a string and is not empty', ",
+									"    () => {",
+									"        pm.expect(",
+									"            pm.response.json().data?.id",
+									"        ).to.be.a('string').that.is.not.empty;",
+									"    }",
+									");",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order\": {\n        \"id\": <Order ID>\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/payments/access_tokens",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"payments",
+								"access_tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Process Payment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(",
+									"    'Response has a transaction_type that is not an empty string', ",
+									"    () => {",
+									"        pm.expect(",
+									"            pm.response.json().data?.transaction_type",
+									"        ).to.be.a('string').that.is.not.empty;",
+									"    }",
+									");",
+									"pm.test(",
+									"    'Response is JSON with status that is \"pending\" or \"success\"', ",
+									"    () => {",
+									"        pm.expect(pm.response.json().data).to.satisfy(",
+									"            data => {",
+									"                return data.status === 'pending' ",
+									"                || data.status === 'success'",
+									"            }",
+									"        );",
+									"    }",
+									");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.bc.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "PAT <Token>",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"payment\": {\n    \"instrument\": {\n      \"type\": \"card\",\n      \"number\": \"4111111111111111\",\n      \"cardholder_name\": \"John Doe\",\n      \"expiry_month\": 12,\n      \"expiry_year\": 2027,\n      \"verification_value\": \"123\"\n    },\n    \"payment_method_id\": \"<Method ID>\"\n  }\n}"
+						},
+						"url": {
+							"raw": "https://payments.bigcommerce.com/stores/{{store_hash}}/payments",
+							"protocol": "https",
+							"host": [
+								"payments",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart/Checkout (Automated)",
+			"item": [
+				{
+					"name": "GQL Create Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"",
+									"const cart = pm.response.json().data?.cart?.createCart?.cart;",
+									"pm.test('Response includes a cart ID', () => {",
+									"    pm.expect(",
+									"        cart?.entityId",
+									"    ).to.be.a('string')",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"cart_id\");",
+									"pm.collectionVariables.unset(\"line_item_id\");",
+									"pm.collectionVariables.set(\"cart_id\", cart?.entityId);",
+									"pm.collectionVariables.set(",
+									"    \"line_item_id\", ",
+									"    cart?.lineItems?.physicalItems[0]?.entityId",
+									");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateCart(\n    $itemQty: Int = 1, \n    $productId: Int!, \n    $variantId: Int\n) {\n    cart {\n        createCart(\n            input: {\n                lineItems: [\n                    {\n                        quantity: $itemQty, \n                        productEntityId: $productId, \n                        variantEntityId: $variantId\n                    }\n                ]\n            }\n        ) {\n            cart {\n                id\n                entityId\n                lineItems {\n                    physicalItems {\n                        entityId\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"itemQty\": 1,\n    \"productId\": {{product_id}},\n    \"variantId\": {{variant_id}}\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCart(\n  $cartId: String!\n) {\n    site {\n        cart(entityId: $cartId) {\n            id\n            entityId\n            currencyCode\n            baseAmount {\n                value\n            }\n            amount {\n                value\n            }\n            lineItems {\n                physicalItems {\n                    entityId\n                    productEntityId\n                    variantEntityId\n                    sku\n                    name\n                    imageUrl\n                    quantity\n                    listPrice {\n                        value\n                    }\n                    originalPrice {\n                        value\n                    }\n                    salePrice {\n                        value\n                    }\n                }\n                digitalItems {\n                    entityId\n                    productEntityId\n                    variantEntityId\n                    sku\n                    name\n                    imageUrl\n                    quantity\n                    listPrice {\n                        value\n                    }\n                    originalPrice {\n                        value\n                    }\n                    salePrice {\n                        value\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"{{cart_id}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Cart Redirect URLs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"",
+									"const urls = pm.response.json().data?.cart?.createCartRedirectUrls?.redirectUrls;",
+									"pm.test('Response includes redirect URLs', () => {",
+									"    pm.expect(",
+									"        urls?.redirectedCheckoutUrl",
+									"    ).to.not.be.empty;",
+									"    pm.expect(",
+									"        urls?.embeddedCheckoutUrl",
+									"    ).to.not.be.empty;",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation GetCartRedirectUrls(\n    $cartId: String!\n) {\n    cart {\n        createCartRedirectUrls(\n            input: {\n                cartEntityId: $cartId\n            }\n        ) {\n            redirectUrls {\n                redirectedCheckoutUrl\n                embeddedCheckoutUrl\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"{{cart_id}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCart(\n  $cartId: String!\n) {\n    site {\n        checkout(entityId: $cartId) {\n            cart {\n                id\n                entityId\n                currencyCode\n                baseAmount {\n                    value\n                }\n                amount {\n                    value\n                }\n            }\n            shippingCostTotal {\n                value\n            }\n            handlingCostTotal {\n                value\n            }\n            taxTotal {\n                value\n            }\n            subtotal {\n                value\n            }\n            grandTotal {\n                value\n            }\n            billingAddress {\n                firstName\n                lastName\n                email\n                address1\n                city\n                stateOrProvince\n                countryCode\n                postalCode\n                phone\n            }\n            shippingConsignments {\n                address {\n                    firstName\n                    lastName\n                    email\n                    address1\n                    city\n                    stateOrProvince\n                    countryCode\n                    postalCode\n                    phone\n                }\n                availableShippingOptions {\n                    description\n                    type\n                }\n                selectedShippingOption {\n                    description\n                    type\n                }\n                shippingCost {\n                    value\n                }\n                handlingCost {\n                    value\n                }\n                lineItemIds\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"{{cart_id}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Create Consignment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response is not an error\", () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const consignments = pm.response.json()",
+									"    .data?.checkout?.addCheckoutShippingConsignments",
+									"    ?.checkout?.shippingConsignments;",
+									"",
+									"pm.test('Response includes exactly one consignment', () => {",
+									"    pm.expect(consignments?.length).to.equal(1);",
+									"});",
+									"pm.test('Consignment includes at least one available shipping option', () => {",
+									"    pm.expect(consignments[0].availableShippingOptions?.length).to.be.above(0);",
+									"});",
+									"",
+									"",
+									"// Store consignment and shipping option IDs",
+									"const consignmentId = consignments[0].entityId;",
+									"const shippingOptionId = consignments[0].availableShippingOptions[0]?.entityId;",
+									"pm.collectionVariables.unset(\"consignment_id\");",
+									"pm.collectionVariables.unset(\"shipping_option_id\");",
+									"pm.collectionVariables.set(\"consignment_id\", consignmentId);",
+									"pm.collectionVariables.set(\"shipping_option_id\", shippingOptionId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation AddConsignments(\n    $cartId: String!, \n    $lineItemId: String!, \n    $lineItemQty: Int = 1\n) {\n    checkout {\n        addCheckoutShippingConsignments(\n            input: {\n                checkoutEntityId: $cartId, \n                data: {\n                    consignments: [{\n                        address: {\n                            firstName: \"John\", \n                            lastName: \"Doe\", \n                            email: \"john.doe@example.org\", \n                            address1: \"11305 Four Points Dr\", \n                            city: \"Austin\", \n                            stateOrProvince: \"Texas\", \n                            stateOrProvinceCode: \"TX\", \n                            countryCode: \"US\", \n                            postalCode: \"78726\", \n                            phone: \"5128654500\", \n                            shouldSaveAddress: false\n                        }, \n                        lineItems: [{\n                            lineItemEntityId: $lineItemId,\n                            quantity: $lineItemQty\n                        }]\n                    }]\n                }\n            }\n        ) {\n            checkout {\n                shippingConsignments {\n                    entityId\n                    availableShippingOptions {\n                        entityId\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"{{cart_id}}\",\n    \"lineItemId\": \"{{line_item_id}}\",\n    \"lineItemQty\": 1\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Select Shipping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"})",
+									"",
+									"const consignments = pm.response.json()",
+									"    .data?.checkout?.selectCheckoutShippingOption",
+									"    ?.checkout?.shippingConsignments;",
+									"",
+									"pm.test('Response includes exactly one consignment', () => {",
+									"    pm.expect(consignments?.length).to.equal(1);",
+									"});",
+									"pm.test(",
+									"    'Selected shipping option ID matches stored shipping option ID', ",
+									"    () => {",
+									"        pm.expect(",
+									"            consignments[0]?.selectedShippingOption?.entityId",
+									"        ).to.equal(",
+									"            pm.collectionVariables.get('shipping_option_id')",
+									"        )",
+									"    }",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation SelectShipping(\n    $cartId: String!, \n    $consignmentId: String!, \n    $shippingOptionId: String!\n) {\n    checkout {\n        selectCheckoutShippingOption(\n            input: {\n                checkoutEntityId: $cartId, \n                consignmentEntityId: $consignmentId, \n                data: {\n                    shippingOptionEntityId: $shippingOptionId\n                }\n            }\n        ) {\n            checkout {\n                shippingConsignments {\n                    selectedShippingOption {\n                        entityId\n                    }\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"{{cart_id}}\",\n    \"consignmentId\": \"{{consignment_id}}\",\n    \"shippingOptionId\": \"{{shipping_option_id}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Create Billing Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"",
+									"const billingAddress = pm.response.json()",
+									"    .data?.checkout?.addCheckoutBillingAddress",
+									"    ?.checkout?.billingAddress;",
+									"",
+									"pm.test(",
+									"    'Billing address includes an id that is a string', ",
+									"    () => {",
+									"        pm.expect(billingAddress?.entityId).to.be.a('string');",
+									"    }",
+									");",
+									"pm.test(",
+									"    'Billing address includes an email that is a non-empty string', ",
+									"    () => {",
+									"        pm.expect(",
+									"            billingAddress?.email",
+									"        ).to.be.a('string').that.is.not.empty;",
+									"    }",
+									");",
+									"pm.test(",
+									"    'Billing address includes a country_code that is 2 characters', ",
+									"    () => {",
+									"        pm.expect(",
+									"            billingAddress?.countryCode",
+									"        ).to.be.a('string').that.has.lengthOf(2);",
+									"    }",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation AddBillingAddress(\n    $cartId: String!\n) {\n    checkout {\n        addCheckoutBillingAddress(\n            input: {\n                checkoutEntityId: $cartId, \n                data: {\n                    address: {\n                        firstName: \"John\", \n                        lastName: \"Doe\", \n                        email: \"john.doe@example.org\", \n                        address1: \"11307 Six Points Dr\", \n                        city: \"Austin\", \n                        stateOrProvince: \"Texas\", \n                        stateOrProvinceCode: \"TX\", \n                        countryCode: \"US\", \n                        postalCode: \"78726\", \n                        phone: \"5128654500\", \n                        shouldSaveAddress: false\n                    }\n                }\n            }\n        ) {\n            checkout {\n                billingAddress {\n                    entityId\n                    email\n                    countryCode\n                }\n            }\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"{{cart_id}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Complete Checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test('Response includes a numeric order ID', () => {",
+									"    pm.expect(",
+									"        pm.response.json()",
+									"        .data?.checkout?.completeCheckout?.orderEntityId",
+									"    ).to.be.a('number');",
+									"});",
+									"",
+									"",
+									"// Store order ID",
+									"const orderId = pm.response.json()",
+									"    .data?.checkout?.completeCheckout?.orderEntityId;",
+									"pm.collectionVariables.unset(\"order_id\");",
+									"pm.collectionVariables.set(\"order_id\", orderId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CompleteCheckout(\n    $cartId: String!\n) {\n    checkout {\n        completeCheckout(\n            input: {\n                checkoutEntityId: $cartId\n            }\n        ) {\n            orderEntityId\n        }\n    }\n}\n",
+								"variables": "{\n    \"cartId\": \"{{cart_id}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Get Payment Methods",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test('At least one payment method is available', () => {",
+									"    pm.expect(pm.response.json().data?.length).to.be.above(0);",
+									"});",
+									"",
+									"const methodInTestMode = pm.response.json()",
+									"    .data?.find(method => method.test_mode);",
+									"pm.test('At least one payment method is in test mode', () => {",
+									"    pm.expect(methodInTestMode).not.to.be.an('undefined');",
+									"});",
+									"",
+									"// Store payment method ID",
+									"pm.collectionVariables.unset(\"payment_method_id\");",
+									"pm.collectionVariables.set(\"payment_method_id\", methodInTestMode?.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/payments/methods?order_id={{order_id}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"payments",
+								"methods"
+							],
+							"query": [
+								{
+									"key": "order_id",
+									"value": "{{order_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Create Pay Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(",
+									"    'Response includes a PAT that is a string and is not empty', ",
+									"    () => {",
+									"        pm.expect(",
+									"            pm.response.json().data?.id",
+									"        ).to.be.a('string').that.is.not.empty;",
+									"    }",
+									");",
+									"",
+									"// Store token",
+									"pm.collectionVariables.unset(\"pat\");",
+									"pm.collectionVariables.set(",
+									"    \"pat\", ",
+									"    pm.response.json().data?.id",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order\": {\n        \"id\": {{order_id}}\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.bigcommerce.com/stores/{{store_hash}}/v3/payments/access_tokens",
+							"protocol": "https",
+							"host": [
+								"api",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"v3",
+								"payments",
+								"access_tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REST Process Payment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error;",
+									"    pm.response.to.not.have.jsonBody(\"errors\");",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\");",
+									"});",
+									"pm.test(",
+									"    'Response has a transaction_type that is not an empty string', ",
+									"    () => {",
+									"        pm.expect(",
+									"            pm.response.json().data?.transaction_type",
+									"        ).to.be.a('string').that.is.not.empty;",
+									"    }",
+									");",
+									"pm.test(",
+									"    'Response is JSON with status that is \"pending\" or \"success\"', ",
+									"    () => {",
+									"        pm.expect(pm.response.json().data).to.satisfy(",
+									"            data => {",
+									"                return data.status === 'pending' ",
+									"                || data.status === 'success'",
+									"            }",
+									"        );",
+									"    }",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": false
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.bc.v1+json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Auth-Token",
+								"value": "{{v3_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "PAT {{pat}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"payment\": {\n    \"instrument\": {\n      \"type\": \"card\",\n      \"number\": \"4111111111111111\",\n      \"cardholder_name\": \"John Doe\",\n      \"expiry_month\": 12,\n      \"expiry_year\": 2027,\n      \"verification_value\": \"123\"\n    },\n    \"payment_method_id\": \"{{payment_method_id}}\"\n  }\n}"
+						},
+						"url": {
+							"raw": "https://payments.bigcommerce.com/stores/{{store_hash}}/payments",
+							"protocol": "https",
+							"host": [
+								"payments",
+								"bigcommerce",
+								"com"
+							],
+							"path": [
+								"stores",
+								"{{store_hash}}",
+								"payments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "GQL Get Form Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"",
+									"const customerFields = pm.response.json().data?.site",
+									"    ?.settings?.formFields?.customer;",
+									"pm.test('Response includes at least one customer field', () => {",
+									"    pm.expect(",
+									"        customerFields?.length",
+									"    ).to.be.above(0);",
+									"});",
+									"",
+									"if (customerFields) {",
+									"    customerFields.forEach(field => {",
+									"        switch (field.__typename) {",
+									"            case \"PicklistFormField\":",
+									"            case \"RadioButtonsFormField\":",
+									"                pm.test('Multiple choice field has at least one option', () => {",
+									"                    pm.expect(",
+									"                        field.options?.length",
+									"                    ).to.be.above(0);",
+									"                });",
+									"                break;",
+									"        }",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetFormFields\n{\n    site {\n        settings {\n            formFields {\n                customer(\n                    filters: {isBuiltIn: false}\n                ) {\n                    __typename\n                    entityId\n                    label\n                    sortOrder\n                    isBuiltIn\n                    isRequired\n                    ... on RadioButtonsFormField {\n                        options {\n                            entityId\n                            label\n                        }\n                    }\n                    ... on PicklistFormField {\n                        options {\n                            entityId\n                            label\n                        }\n                    }\n                    ... on DateFormField {\n                        defaultDate\n                        minDate\n                        maxDate\n                    }\n                    ... on TextFormField {\n                        defaultText\n                        maxLength\n                    }\n                }\n            }\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Register Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"",
+									"const customer = pm.response.json().data?.customer?.registerCustomer?.customer;",
+									"pm.test('Response includes a customer ID', () => {",
+									"    pm.expect(",
+									"        customer?.entityId",
+									"    ).to.be.a('number');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation RegisterCustomer(\n    $firstName: String!,\n    $lastName: String!,\n    $email: String!,\n    $password: String!,\n    $multipleChoices: [MultipleChoiceFormFieldInput!],\n    $dates: [DateFormFieldInput!],\n    $texts: [TextFormFieldInput!]\n) {\n  customer {\n    registerCustomer(\n      input: {\n        firstName: $firstName,\n        lastName: $lastName,\n        email: $email,\n        password: $password,\n        formFields: {\n          multipleChoices: $multipleChoices,\n          dates: $dates,\n          texts: $texts\n        }\n      }\n    ) {\n      customer {\n        entityId\n      }\n      errors {\n        ... on EmailAlreadyInUseError {\n            message\n        }\n        ... on AccountCreationDisabledError {\n            message\n        }\n        ... on CustomerRegistrationError {\n            message\n        }\n        ... on ValidationError {\n            message\n        }\n      }\n    }\n  }\n}",
+								"variables": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"<Email>\",\n    \"password\": \"<Password>\",\n    \"multipleChoices\": [\n        {\n            \"fieldEntityId\": <Field ID>,\n            \"fieldValueEntityId\": <Value ID>\n        }\n    ],\n    \"dates\": [\n        {\n            \"fieldEntityId\": <Field ID>,\n            \"date\": <Date>\n        }\n    ],\n    \"texts\": [\n        {\n            \"fieldEntityId\": <Field ID>,\n            \"text\": \"<Value>\"\n        }\n    ]\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Customer Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const result = pm.response.json().data?.login?.result;",
+									"pm.test('Login was successful', () => {",
+									"    pm.expect(result).to.equal(\"success\");",
+									"});",
+									"",
+									"const customer = pm.response.json().data?.login?.customer;",
+									"pm.test('Response includes a customer ID', () => {",
+									"    pm.expect(",
+									"        customer?.entityId",
+									"    ).to.be.a('number');",
+									"});",
+									"",
+									"const token = pm.response.json().data?.login?.customerAccessToken?.value;",
+									"pm.test('Response includes a token', () => {",
+									"    pm.expect(",
+									"        token",
+									"    ).to.be.a('string');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Login(\n    $email: String!,\n    $password: String!\n) {\n    login(\n        email: $email,\n        password: $password\n    ) {\n        result\n        customer {\n            entityId\n            firstName\n            lastName\n        }\n        customerAccessToken {\n            value\n            expiresAt\n        }\n    }\n}",
+								"variables": "{\n    \"email\": \"<Email>\",\n    \"password\": \"<Password>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Add Customer Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const address = pm.response.json().data?.customer?.addCustomerAddress?.address;",
+									"pm.test('Response includes an address ID', () => {",
+									"    pm.expect(",
+									"        address?.entityId",
+									"    ).to.be.a('number');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Bc-Customer-Access-Token",
+								"value": "<Access Token>"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation AddCustomerAddress(\n    $firstName: String!,\n    $lastName: String!,\n    $address1: String!,\n    $city: String!,\n    $countryCode: String!,\n    $stateOrProvince: String,\n    $postalCode: String\n) {\n    customer {\n        addCustomerAddress(\n            input: {\n                firstName: $firstName,\n                lastName: $lastName,\n                address1: $address1,\n                city: $city,\n                countryCode: $countryCode,\n                stateOrProvince: $stateOrProvince,\n                postalCode: $postalCode\n            }\n        ) {\n            address {\n                entityId\n            }\n            errors {\n                ... on CustomerNotLoggedInError {\n                    message\n                }\n                ... on CustomerAddressCreationError {\n                    message\n                }\n                ... on ValidationError {\n                    message\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"address1\": \"123 Park Central East\",\n    \"city\": \"Austin\",\n    \"countryCode\": \"US\",\n    \"stateOrProvince\": \"Texas\",\n    \"postalCode\": \"78726\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Bc-Customer-Access-Token",
+								"value": "<Access Token>"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCustomer {\n    customer {\n        entityId\n        customerGroupId\n        email\n        firstName\n        lastName\n        addresses {\n            edges {\n                node {\n                    firstName\n                    lastName\n                    address1\n                    city\n                    countryCode\n                    stateOrProvince\n                    phone\n                    postalCode\n                }\n            }\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Customer (CIT)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{storefront_impersonation_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Bc-Customer-Id",
+								"value": "<Customer ID>"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCustomer {\n    customer {\n        entityId\n        customerGroupId\n        email\n        firstName\n        lastName\n        addresses {\n            edges {\n                node {\n                    firstName\n                    lastName\n                    address1\n                    city\n                    countryCode\n                    stateOrProvince\n                    phone\n                    postalCode\n                }\n            }\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Request Password Reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"pm.test('200 response received', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const errors = pm.response.json().data?.customer?.requestResetPassword?.errors;",
+									"pm.test('No validation errors', () => {",
+									"    pm.expect(errors?.length).to.equal(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation ChangePassword(\n    $email: String!,\n    $redirectPath: String\n) {\n    customer {\n        requestResetPassword(\n            input: {\n                email: $email,\n                path: $redirectPath\n            }\n        ) {\n            errors {\n                ... on ValidationError {\n                    path\n                    message\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"email\": \"<Email>\",\n    \"redirectPath\": \"/my-password-reset\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Reset Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"pm.test('200 response received', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const errors = pm.response.json().data?.customer?.resetPassword?.errors;",
+									"pm.test('No validation errors', () => {",
+									"    pm.expect(errors?.length).to.equal(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation ChangePassword(\n    $customerId: Int!,\n    $token: String!,\n    $password: String!\n) {\n    customer {\n        resetPassword(\n            input: {\n                customerEntityId: $customerId,\n                token: $token,\n                newPassword: $password\n            }\n        ) {\n            errors {\n                ... on ValidationError {\n                    path\n                    message\n                }\n                ... on CustomerPasswordError {\n                    message\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"customerId\": <Customer ID>,\n    \"token\": \"<Reset Token>\",\n    \"password\": \"<Password>\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer (Automated)",
+			"item": [
+				{
+					"name": "GQL Get Form Fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"",
+									"const customerFields = pm.response.json().data?.site",
+									"    ?.settings?.formFields?.customer;",
+									"pm.test('Response includes at least one customer field', () => {",
+									"    pm.expect(",
+									"        customerFields?.length",
+									"    ).to.be.above(0);",
+									"});",
+									"",
+									"",
+									"pm.collectionVariables.unset(\"customer_multiple_choices\");",
+									"pm.collectionVariables.unset(\"customer_dates\");",
+									"pm.collectionVariables.unset(\"customer_texts\");",
+									"",
+									"const customerMultipleChoices = [];",
+									"const customerDates = [];",
+									"const customerTexts = [];",
+									"if (customerFields) {",
+									"    customerFields.forEach(field => {",
+									"        switch (field.__typename) {",
+									"            case \"PicklistFormField\":",
+									"            case \"RadioButtonsFormField\":",
+									"                pm.test('Multiple choice field has at least one option', () => {",
+									"                    pm.expect(",
+									"                        field.options?.length",
+									"                    ).to.be.above(0);",
+									"                });",
+									"                customerMultipleChoices.push({",
+									"                    \"fieldEntityId\": field.entityId,",
+									"                    \"fieldValueEntityId\": field.options[0].entityId,",
+									"                });",
+									"                break;",
+									"",
+									"            case \"DateFormField\":",
+									"                let date = new Date();",
+									"                if (field.minDate) {",
+									"                    date = field.minDate;",
+									"                } else if (field.defaultDate) {",
+									"                    date = field.defaultDate;",
+									"                } else if (field.maxDate) {",
+									"                    date = field.maxDate;",
+									"                }",
+									"                customerDates.push({",
+									"                    \"fieldEntityId\": field.entityId,",
+									"                    \"date\": date,",
+									"                });",
+									"                break;",
+									"",
+									"            case \"TextFormField\":",
+									"                customerTexts.push({",
+									"                    \"fieldEntityId\": field.entityId,",
+									"                    \"text\": \"Test Value\",",
+									"                });",
+									"        }",
+									"    });",
+									"}",
+									"",
+									"pm.collectionVariables.set(",
+									"    \"customer_multiple_choices\", ",
+									"    JSON.stringify(customerMultipleChoices)",
+									");",
+									"pm.collectionVariables.set(",
+									"    \"customer_dates\",",
+									"    JSON.stringify(customerDates)",
+									");",
+									"pm.collectionVariables.set(",
+									"    \"customer_texts\",",
+									"    JSON.stringify(customerTexts)",
+									");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetFormFields\n{\n    site {\n        settings {\n            formFields {\n                customer(\n                    filters: {isBuiltIn: false}\n                ) {\n                    __typename\n                    entityId\n                    label\n                    sortOrder\n                    isBuiltIn\n                    isRequired\n                    ... on RadioButtonsFormField {\n                        options {\n                            entityId\n                            label\n                        }\n                    }\n                    ... on PicklistFormField {\n                        options {\n                            entityId\n                            label\n                        }\n                    }\n                    ... on DateFormField {\n                        defaultDate\n                        minDate\n                        maxDate\n                    }\n                    ... on TextFormField {\n                        defaultText\n                        maxLength\n                    }\n                }\n            }\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Register Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"",
+									"const customer = pm.response.json().data?.customer?.registerCustomer?.customer;",
+									"pm.test('Response includes a customer ID', () => {",
+									"    pm.expect(",
+									"        customer?.entityId",
+									"    ).to.be.a('number');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation RegisterCustomer(\n    $firstName: String!,\n    $lastName: String!,\n    $email: String!,\n    $password: String!,\n    $multipleChoices: [MultipleChoiceFormFieldInput!],\n    $dates: [DateFormFieldInput!],\n    $texts: [TextFormFieldInput!]\n) {\n  customer {\n    registerCustomer(\n      input: {\n        firstName: $firstName,\n        lastName: $lastName,\n        email: $email,\n        password: $password,\n        formFields: {\n          multipleChoices: $multipleChoices,\n          dates: $dates,\n          texts: $texts\n        }\n      }\n    ) {\n      customer {\n        entityId\n      }\n      errors {\n        ... on EmailAlreadyInUseError {\n            message\n        }\n        ... on AccountCreationDisabledError {\n            message\n        }\n        ... on CustomerRegistrationError {\n            message\n        }\n        ... on ValidationError {\n            message\n        }\n      }\n    }\n  }\n}",
+								"variables": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"{{customer_email}}\",\n    \"password\": \"{{customer_password}}\",\n    \"multipleChoices\": {{customer_multiple_choices}},\n    \"dates\": {{customer_dates}},\n    \"texts\": {{customer_texts}}\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Customer Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const result = pm.response.json().data?.login?.result;",
+									"pm.test('Login was successful', () => {",
+									"    pm.expect(result).to.equal(\"success\");",
+									"});",
+									"",
+									"const customer = pm.response.json().data?.login?.customer;",
+									"pm.test('Response includes a customer ID', () => {",
+									"    pm.expect(",
+									"        customer?.entityId",
+									"    ).to.be.a('number');",
+									"});",
+									"",
+									"const token = pm.response.json().data?.login?.customerAccessToken?.value;",
+									"pm.test('Response includes a token', () => {",
+									"    pm.expect(",
+									"        token",
+									"    ).to.be.a('string');",
+									"});",
+									"",
+									"pm.collectionVariables.unset(\"customer_id\");",
+									"pm.collectionVariables.set(\"customer_id\", customer?.entityId);",
+									"",
+									"pm.collectionVariables.unset(\"customer_access_token\");",
+									"pm.collectionVariables.set(\"customer_access_token\", token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation Login(\n    $email: String!,\n    $password: String!\n) {\n    login(\n        email: $email,\n        password: $password\n    ) {\n        result\n        customer {\n            entityId\n            firstName\n            lastName\n        }\n        customerAccessToken {\n            value\n            expiresAt\n        }\n    }\n}",
+								"variables": "{\n    \"email\": \"{{customer_email}}\",\n    \"password\": \"{{customer_password}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Add Customer Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"",
+									"const address = pm.response.json().data?.customer?.addCustomerAddress?.address;",
+									"pm.test('Response includes an address ID', () => {",
+									"    pm.expect(",
+									"        address?.entityId",
+									"    ).to.be.a('number');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Bc-Customer-Access-Token",
+								"value": "{{customer_access_token}}"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation AddCustomerAddress(\n    $firstName: String!,\n    $lastName: String!,\n    $address1: String!,\n    $city: String!,\n    $countryCode: String!,\n    $stateOrProvince: String,\n    $postalCode: String\n) {\n    customer {\n        addCustomerAddress(\n            input: {\n                firstName: $firstName,\n                lastName: $lastName,\n                address1: $address1,\n                city: $city,\n                countryCode: $countryCode,\n                stateOrProvince: $stateOrProvince,\n                postalCode: $postalCode\n            }\n        ) {\n            address {\n                entityId\n            }\n            errors {\n                ... on CustomerNotLoggedInError {\n                    message\n                }\n                ... on CustomerAddressCreationError {\n                    message\n                }\n                ... on ValidationError {\n                    message\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"address1\": \"123 Park Central East\",\n    \"city\": \"Austin\",\n    \"countryCode\": \"US\",\n    \"stateOrProvince\": \"Texas\",\n    \"postalCode\": \"78726\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Bc-Customer-Access-Token",
+								"value": "{{customer_access_token}}"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCustomer {\n    customer {\n        entityId\n        customerGroupId\n        email\n        firstName\n        lastName\n        addresses {\n            edges {\n                node {\n                    firstName\n                    lastName\n                    address1\n                    city\n                    countryCode\n                    stateOrProvince\n                    phone\n                    postalCode\n                }\n            }\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Get Customer (CIT)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{storefront_impersonation_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Bc-Customer-Id",
+								"value": "{{customer_id}}"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCustomer {\n    customer {\n        entityId\n        customerGroupId\n        email\n        firstName\n        lastName\n        addresses {\n            edges {\n                node {\n                    firstName\n                    lastName\n                    address1\n                    city\n                    countryCode\n                    stateOrProvince\n                    phone\n                    postalCode\n                }\n            }\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Request Password Reset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"pm.test('200 response received', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const errors = pm.response.json().data?.customer?.requestResetPassword?.errors;",
+									"pm.test('No validation errors', () => {",
+									"    pm.expect(errors?.length).to.equal(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation ChangePassword(\n    $email: String!,\n    $redirectPath: String\n) {\n    customer {\n        requestResetPassword(\n            input: {\n                email: $email,\n                path: $redirectPath\n            }\n        ) {\n            errors {\n                ... on ValidationError {\n                    path\n                    message\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"email\": \"{{customer_email}}\",\n    \"redirectPath\": \"/my-password-reset\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GQL Reset Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response is not an error', () => {",
+									"    pm.response.to.not.be.error",
+									"    pm.response.to.not.have.jsonBody(\"errors\")",
+									"});",
+									"pm.test('Response is JSON with data', () => {",
+									"    pm.response.to.have.jsonBody(\"data\")",
+									"});",
+									"pm.test('200 response received', () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const errors = pm.response.json().data?.customer?.resetPassword?.errors;",
+									"pm.test('No validation errors', () => {",
+									"    pm.expect(errors?.length).to.equal(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableCookies": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation ChangePassword(\n    $customerId: Int!,\n    $token: String!,\n    $password: String!\n) {\n    customer {\n        resetPassword(\n            input: {\n                customerEntityId: $customerId,\n                token: $token,\n                newPassword: $password\n            }\n        ) {\n            errors {\n                ... on ValidationError {\n                    path\n                    message\n                }\n                ... on CustomerPasswordError {\n                    message\n                }\n            }\n        }\n    }\n}",
+								"variables": "{\n    \"customerId\": {{customer_id}},\n    \"token\": \"{{password_reset_token}}\",\n    \"password\": \"{{customer_password}}\"\n}"
+							}
+						},
+						"url": {
+							"raw": "https://store-{{store_hash}}-{{storefront_channel_id}}.mybigcommerce.com/graphql",
+							"protocol": "https",
+							"host": [
+								"store-{{store_hash}}-{{storefront_channel_id}}",
+								"mybigcommerce",
+								"com"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{storefront_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "category_id",
+			"value": ""
+		},
+		{
+			"key": "product_id",
+			"value": ""
+		},
+		{
+			"key": "last_product_cursor",
+			"value": ""
+		},
+		{
+			"key": "filter_category",
+			"value": ""
+		},
+		{
+			"key": "filter_search_term",
+			"value": "T-shirt",
+			"type": "string"
+		},
+		{
+			"key": "filter_variant_attr_name",
+			"value": ""
+		},
+		{
+			"key": "filter_variant_attr_val",
+			"value": ""
+		},
+		{
+			"key": "cart_id",
+			"value": ""
+		},
+		{
+			"key": "line_item_id",
+			"value": ""
+		},
+		{
+			"key": "consignment_id",
+			"value": ""
+		},
+		{
+			"key": "shipping_option_id",
+			"value": ""
+		},
+		{
+			"key": "order_id",
+			"value": ""
+		},
+		{
+			"key": "payment_method_id",
+			"value": ""
+		},
+		{
+			"key": "pat",
+			"value": ""
+		},
+		{
+			"key": "customer_multiple_choices",
+			"value": ""
+		},
+		{
+			"key": "customer_dates",
+			"value": ""
+		},
+		{
+			"key": "customer_texts",
+			"value": ""
+		},
+		{
+			"key": "customer_email",
+			"value": "replace.me@email.com",
+			"type": "string"
+		},
+		{
+			"key": "customer_password",
+			"value": "Password1",
+			"type": "string"
+		},
+		{
+			"key": "customer_id",
+			"value": ""
+		},
+		{
+			"key": "password_reset_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "customer_access_token",
+			"value": ""
+		},
+		{
+			"key": "variant_id",
+			"value": ""
+		}
+	]
+}
