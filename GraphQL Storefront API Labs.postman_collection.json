@@ -5045,6 +5045,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -5055,6 +5056,7 @@
 			"script": {
 				"type": "text/javascript",
 				"packages": {},
+				"requests": {},
 				"exec": [
 					""
 				]
@@ -5080,8 +5082,7 @@
 		},
 		{
 			"key": "filter_search_term",
-			"value": "T-shirt",
-			"type": "string"
+			"value": "T-shirt"
 		},
 		{
 			"key": "filter_variant_attr_name",
@@ -5133,13 +5134,11 @@
 		},
 		{
 			"key": "customer_email",
-			"value": "replace.me@email.com",
-			"type": "string"
+			"value": "replace.me@email.com"
 		},
 		{
 			"key": "customer_password",
-			"value": "Password1",
-			"type": "string"
+			"value": "Password1"
 		},
 		{
 			"key": "customer_id",
@@ -5147,8 +5146,7 @@
 		},
 		{
 			"key": "password_reset_token",
-			"value": "",
-			"type": "string"
+			"value": ""
 		},
 		{
 			"key": "customer_access_token",
