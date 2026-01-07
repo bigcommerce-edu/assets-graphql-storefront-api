@@ -76,6 +76,8 @@ This request further refines the search by adding a category filter.
 
 ### GQL Product Search - Cat, Variant
 
+This request further refines the search by adding a product attribute filter.
+
 * **Enter** a `searchTerm`, `categoryId`, `variantAttrName`, and `variantAttrVal` in the GraphQL variables pane of the Body tab.
 * **Observe** the product response data.
 

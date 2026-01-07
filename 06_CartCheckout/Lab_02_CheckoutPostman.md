@@ -15,11 +15,7 @@ Your store must be configured with a shipping zone that:
 
 For more about configuring shipping, see the article below:
 
-**Shipping Setup**
-
-KB Article
-
-[View Resource](https://support.bigcommerce.com/s/article/Shipping-Setup)
+**[Shipping Setup](https://support.bigcommerce.com/s/article/Shipping-Setup)**
 
 ### Product Prerequisites
 
