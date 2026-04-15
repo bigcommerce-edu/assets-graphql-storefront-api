@@ -9,10 +9,12 @@ Your job is to compare two versions of a Postman collection and produce a struct
 Identify which mode applies based on the user's request:
 
 - **Two-file mode**: The user explicitly provides two file paths (old and new). Use those directly.
-- **Staged/uncommitted mode**: Default when no comparison target is specified; compare the working tree file against `HEAD`.
-- **Branch vs. main mode**: The user says "compared to main" or similar; compare `main`'s version against the current working file.
+- **Staged/uncommitted mode**: No comparison target is specified AND there are staged or uncommitted changes to the file.
+- **Branch vs. main mode**: The user says "compared to main" or similar; OR no comparison target is specified and the current branch is not `main` and there are no staged or uncommitted changes to the file; OR no comparison target is specified and the user explicitly says they want to compare staged/uncommitted changes with `main` instead of the current branch. Compare `main`'s version against the current working file.
 
-Ask for clarification if the mode is ambiguous.
+When no comparison target is specified, run `git branch --show-current` to check the current branch before choosing a mode. If the branch is not `main`, default to **branch vs. main mode** — this is the most useful comparison for feature/topic branches. Only fall back to staged/uncommitted mode when already on `main`.
+
+Ask for clarification if the mode is still ambiguous after checking the branch.
 
 ---
 
