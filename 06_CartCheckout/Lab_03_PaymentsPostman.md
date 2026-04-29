@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-* A BigCommerce [sandbox store](https://docs.bigcommerce.com/developer/docs/start/about/sandboxes) or [trial store](https://www.bigcommerce.com/essentials/), or a full production store
+* A BigCommerce [sandbox store](https://docs.bigcommerce.com/developer/docs/overview/sandboxes) or [trial store](https://www.bigcommerce.com/essentials/), or a full production store
 * [Postman](https://www.postman.com/)
 * An existing Postman environment and collection as configured in previous labs
 
@@ -30,7 +30,7 @@ For more about configuring payments, see the article below:
 
 Our example requests will involve directly supplying a credit card number. For real-world implementations directly handling credit card numbers, you must consider the implications for [PCI DSS](https://www.pcisecuritystandards.org/) compliance. If an application passes credit card information to BigCommerce, that application's PCI compliance and Cardholder Data Environment (CDE) are not managed by BigCommerce.
 
-You can minimize your PCI compliance burden by using the [Stored Credit Cards feature](https://support.bigcommerce.com/s/article/Enabling-Stored-Payment-Methods) provided by BigCommerce. Assuming a cart has a customer ID associated with it, and the customer has previously stored a credit card with BigCommerce, the application can [use the customer's stored payment method to make a payment](https://docs.bigcommerce.com/developer/docs/store-operations/payments#stored-cards-and-paypal-accounts) instead of directly entering a credit card number.
+You can minimize your PCI compliance burden by using the [Stored Credit Cards feature](https://support.bigcommerce.com/s/article/Enabling-Stored-Payment-Methods) provided by BigCommerce. Assuming a cart has a customer ID associated with it, and the customer has previously stored a credit card with BigCommerce, the application can [use the customer's stored payment method to make a payment](https://docs.bigcommerce.com/developer/docs/admin/checkout-and-cart/payments/overview#stored-cards-paypal-and-bank-accounts) instead of directly entering a credit card number.
 
 Redirecting to or embedding the BigCommerce checkout means sensitive payment data is never directly entered or transmitted by your frontend application, leaving the burden of PCI compliance to BigCommerce. This is an advantage of this approach. Carefully consider PCI compliance when planning your headless implementation.
 

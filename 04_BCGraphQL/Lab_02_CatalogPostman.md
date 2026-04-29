@@ -2,7 +2,7 @@
 
 ### Prerequisites
 
-* A BigCommerce [sandbox store](https://docs.bigcommerce.com/developer/docs/start/about/sandboxes) or [trial store](https://www.bigcommerce.com/essentials/), or a full production store
+* A BigCommerce [sandbox store](https://docs.bigcommerce.com/developer/docs/overview/sandboxes) or [trial store](https://www.bigcommerce.com/essentials/), or a full production store
 * [Postman](https://www.postman.com/)
 * An existing Postman environment and collection as configured in previous labs
 * At least one visible top-level category with at least one visible child category

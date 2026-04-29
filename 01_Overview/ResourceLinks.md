@@ -1,10 +1,9 @@
 # Overview - Resource Links
 
-* [GraphQL Storefront API Overview](https://docs.bigcommerce.com/developer/api-docs/storefront/graphql/graphql-api-overview)
+* [GraphQL Storefront API Overview](https://docs.bigcommerce.com/developer/docs/storefront/guides/graphql-storefront-api)
 * [Developer Community](https://docs.bigcommerce.com/developer/community)
-* [GraphQL Explorer](https://docs.bigcommerce.com/developer/graphql-storefront/explorer)
-* [Storefront GraphQL API Reference](https://docs.bigcommerce.com/developer/graphql-storefront/reference)
-* [API Best Practices](https://docs.bigcommerce.com/developer/docs/start/best-practices)
+* [Storefront GraphQL API Reference](https://docs.bigcommerce.com/developer/api-reference/graphql/storefront)
+* [API Best Practices](https://docs.bigcommerce.com/developer/docs/overview/api-fundamentals/rate-limits)
 * [GraphQL Cheatsheet](https://devhints.io/graphql)
 * [graphql.org](https://graphql.org/)
 * [GraphiQL](https://github.com/graphql/graphiql)
