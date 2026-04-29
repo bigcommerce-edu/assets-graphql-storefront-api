@@ -9,7 +9,8 @@
 ## In this lab, you will:
 
 * Generate a store-level v2/v3 API token
-* Create a GraphQL Storefront API token
+* Create a **Storefront Token** (with CORS) for browser/client use → stored in `storefront_token`
+* Create a **Private Token** for server-to-server use → stored in `private_storefront_token`
 * View the GraphQL Storefront API example with your own store's data
 
 
@@ -53,35 +54,34 @@ You'll need an API client to craft the request to create a GraphQL Storefront AP
 
 Import the [GraphQL Storefront API collection](../GraphQL%20Storefront%20API%20Labs.postman_collection.json).
 
-## Step 4: Create a GraphQL Storefront Token with Allowed Origins
+## Step 4: Create a Storefront Token for Client Use
 
-For your first token, you'll specify `allowed_cors_origins`, configuring a token that will be usable client-side from a specific origin domain (bigcommerce.github.io).
+You'll create a **Storefront Token** with `allowed_cors_origins` so it can be used from a browser (e.g. for the "View Example" step later). This token is automatically stored in `storefront_token` by the request's test script.
 
-In the "Setup" folder, run the request **"REST Create Storefront Token (with origin)"**.
+In the "Setup" folder, run the request **"REST Create Storefront Token (client)"**.
 
 * **Verify** that all tests succeed.
-* **Record** the `token` value from the response.
+* **Verify** that the `storefront_token` variable is now populated in your environment.
 
 ## Step 5: View Example With Your Store's Data
 
 The token you created in the previous step will work in a client-side context when the request originates from `bigcommerce.github.io`.
 
-1. **Go** to [https://bigcommerce.github.io/storefront-api-examples/html-bootstrap-vanillajs/](https://bigcommerce.github.io/storefront-api-examples/html-bootstrap-vanillajs/).
-2. **Paste** your store's URL in the "Store URL" field.
-3. **Paste** your token into the "Storefront API Token" field.
-4. **Click** Submit.
-5. **View** the web page.
+1. **Copy** the `storefront_token` value from your Postman environment.
+2. **Go** to [https://bigcommerce.github.io/storefront-api-examples/html-bootstrap-vanillajs/](https://bigcommerce.github.io/storefront-api-examples/html-bootstrap-vanillajs/).
+3. **Paste** your store's URL in the "Store URL" field.
+4. **Paste** your token into the "Storefront API Token" field.
+5. **Click** Submit.
+6. **View** the web page.
 
-## Step 6: Create a GraphQL Storefront Token with for Server-to-Server
+## Step 6: Create a Private Token for Server-to-Server
 
-The next request will be nearly identical to the previous, but without specifying `allowed_cors_origins`. This token will be suitable for using server-to-server.
+For server-to-server GraphQL requests (and the rest of this course), you'll use a **Private Token**. Unlike the Storefront Token, a Private Token uses a different endpoint (`/api-token-private`) and requires `scopes` in the request body. This token is automatically stored in `private_storefront_token` and is used by the collection's Bearer Token authorization for all GraphQL requests.
 
-The automation contained in the following request in the imported collection will store this server-to-server token in your environment for automatic use in the authentcation of all future requests.
-
-In the "Setup" folder, run the request **"REST Create Storefront Token (server to server)"**.
+In the "Setup" folder, run the request **"REST Create Private Token (server)"**.
 
 * **Verify** that all tests succeed.
 * **Observe** the token in the response.
-* **Verify** that the `storefront_token` variable is now populated on your collection.
+* **Verify** that the `private_storefront_token` variable is now populated in your environment.
 
 After your token is successfully created, try the "GQL Get Category Tree" request in the "Catalog" folder.
