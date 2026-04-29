@@ -7,5 +7,7 @@
 * [API Best Practices](https://developer.bigcommerce.com/docs/start/best-practices)
 * [GraphQL Cheatsheet](https://devhints.io/graphql)
 * [graphql.org](https://graphql.org/)
+* [GraphiQL](https://github.com/graphql/graphiql)
+* [GraphQL Storefront API Playground](https://gql-playground.bigcommerce.com/)
 * [Vanilla JS Storefront API Example Source Code](https://github.com/bigcommerce/storefront-api-examples/blob/master/html-bootstrap-vanillajs/index.html)
-* [GraphQL Explorer](https://developer.bigcommerce.com/graphql-storefront/explorer)
+* [Introduction to GraphQL (Video)](https://medium.com/bigcommerce-developer-blog/introduction-to-graphql-bigcommerce-c548e048e636)

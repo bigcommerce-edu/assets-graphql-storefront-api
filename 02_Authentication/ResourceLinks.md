@@ -8,3 +8,6 @@
 * [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
 * [Sites and Routes](https://developer.bigcommerce.com/api-reference/cart-checkout/sites-routes-api/sites/post-site)
 * [List of GraphQL Error Messages](https://developer.bigcommerce.com/api-docs/getting-started/api-status-codes#graphql-api-http-status-codes)
+* [Customer Login API](https://developer.bigcommerce.com/docs/storefront/guides/customer-authentication/customer-login)
+* [Create a Storefront Token](https://developer.bigcommerce.com/api-reference/rest/admin/authentication-apis/storefront-api-tokens/create-token)
+* [Create a Private Token](https://developer.bigcommerce.com/api-reference/rest/admin/authentication-apis/storefront-api-tokens/private-api-token/create-private-token)
