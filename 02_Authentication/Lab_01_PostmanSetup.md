@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-* A BigCommerce [sandbox store](https://developer.bigcommerce.com/docs/start/about/sandboxes) or [trial store](https://www.bigcommerce.com/essentials/), or a full production store
+* A BigCommerce [sandbox store](https://docs.bigcommerce.com/developer/docs/start/about/sandboxes) or [trial store](https://www.bigcommerce.com/essentials/), or a full production store
 * [Postman](https://www.postman.com/) or a similar API client
 
 
